@@ -381,11 +381,13 @@ CODE_FONT = ("Arial", 14)
 region_entry = AutocompleteEntry(DOMAIN_LIST, row1_frame, font=FIELD_FONT, width=FIELD_WIDTH)
 region_entry.grid(row=0, column=0, padx=12, pady=6, sticky="ew")
 region_entry.insert(0, "   Област")
+
 def clear_region_placeholder(event):
     if region_entry.get().strip() == "Област" or region_entry.get().strip() == "":
         region_entry.delete(0, tk.END)
         region_entry.config(fg="black")
 region_entry.bind("<FocusIn>", clear_region_placeholder)
+
 def restore_region_placeholder(event):
     if region_entry.get().strip() == "":
         region_entry.insert(0, "   Област")
@@ -395,6 +397,7 @@ region_entry.config(fg="gray")
 region_code_var = tk.StringVar()
 region_code_entry = tk.Entry(row1_frame, font=CODE_FONT, width=CODE_WIDTH, textvariable=region_code_var, state='readonly', justify='center')
 region_code_entry.grid(row=0, column=1, padx=(0, 12), pady=6, sticky="ew")
+
 def on_region_select(value):
     region_code_var.set(DOMAIN_DICT.get(value, ''))
 region_entry.set_on_select(on_region_select)
@@ -403,11 +406,13 @@ region_entry.set_on_select(on_region_select)
 municipality_entry = AutocompleteEntry(MUNICIPALITY_LIST, row1_frame, font=FIELD_FONT, width=FIELD_WIDTH)
 municipality_entry.grid(row=0, column=2, padx=12, pady=6, sticky="ew")
 municipality_entry.insert(0, "   Община")
+
 def clear_municipality_placeholder(event):
     if municipality_entry.get().strip() == "Община" or municipality_entry.get().strip() == "":
         municipality_entry.delete(0, tk.END)
         municipality_entry.config(fg="black")
 municipality_entry.bind("<FocusIn>", clear_municipality_placeholder)
+
 def restore_municipality_placeholder(event):
     if municipality_entry.get().strip() == "":
         municipality_entry.insert(0, "   Община")
@@ -417,6 +422,7 @@ municipality_entry.config(fg="gray")
 municipality_code_var = tk.StringVar()
 municipality_code_entry = tk.Entry(row1_frame, font=CODE_FONT, width=CODE_WIDTH, textvariable=municipality_code_var, state='readonly', justify='center')
 municipality_code_entry.grid(row=0, column=3, padx=(0, 12), pady=6, sticky="ew")
+
 def on_municipality_select(value):
     municipality_code_var.set(MUNICIPALITY_DICT.get(value, ''))
 municipality_entry.set_on_select(on_municipality_select)
@@ -425,11 +431,13 @@ municipality_entry.set_on_select(on_municipality_select)
 city_entry = AutocompleteEntry(CITY_LIST, row1_frame, font=FIELD_FONT, width=FIELD_WIDTH)
 city_entry.grid(row=0, column=4, padx=12, pady=6, sticky="ew")
 city_entry.insert(0, "   Населено място")
+
 def clear_city_placeholder(event):
     if city_entry.get().strip() == "Населено място" or city_entry.get().strip() == "":
         city_entry.delete(0, tk.END)
         city_entry.config(fg="black")
 city_entry.bind("<FocusIn>", clear_city_placeholder)
+
 def restore_city_placeholder(event):
     if city_entry.get().strip() == "":
         city_entry.insert(0, "   Населено място")
@@ -439,6 +447,7 @@ city_entry.config(fg="gray")
 city_code_var = tk.StringVar()
 city_code_entry = tk.Entry(row1_frame, font=CODE_FONT, width=CODE_WIDTH, textvariable=city_code_var, state='readonly', justify='center')
 city_code_entry.grid(row=0, column=5, padx=(0, 12), pady=6, sticky="ew")
+
 def on_city_select(value):
     city_code_var.set(CITY_DICT.get(value, ''))
 city_entry.set_on_select(on_city_select)
@@ -459,15 +468,18 @@ date_entry.grid(row=0, column=0, padx=(0, 8), pady=6, sticky="ew")
 address_entry = tk.Entry(row2_frame, font=FIELD_FONT, width=ADDRESS_WIDTH)
 address_entry.grid(row=0, column=1, padx=(0, 8), pady=6, sticky="ew")
 address_entry.insert(0, "   Адрес")
+
 def clear_address_placeholder(event):
     if address_entry.get().strip() == "Адрес" or address_entry.get().strip() == "":
         address_entry.delete(0, tk.END)
         address_entry.config(fg="black")
 address_entry.bind("<FocusIn>", clear_address_placeholder)
+
 def restore_address_placeholder(event):
     if address_entry.get().strip() == "":
         address_entry.insert(0, "   Адрес")
         address_entry.config(fg="gray")
+
 address_entry.bind("<FocusOut>", restore_address_placeholder)
 address_entry.config(fg="gray")
 
@@ -475,11 +487,13 @@ address_entry.config(fg="gray")
 number_entry = tk.Entry(row2_frame, font=FIELD_FONT, width=NUMBER_WIDTH)
 number_entry.grid(row=0, column=2, padx=(0, 8), pady=6, sticky="ew")
 number_entry.insert(0, "   №")
+
 def clear_number_placeholder(event):
     if number_entry.get().strip() == "№" or number_entry.get().strip() == "":
         number_entry.delete(0, tk.END)
         number_entry.config(fg="black")
 number_entry.bind("<FocusIn>", clear_number_placeholder)
+
 def restore_number_placeholder(event):
     if number_entry.get().strip() == "":
         number_entry.insert(0, "   №")
@@ -489,8 +503,10 @@ number_entry.config(fg="gray")
 
 generate_btn = tk.Button(root, text="Генерирай XML", command=generate_output, font=("Arial", 14, "bold"), bg="#4CAF50", fg="white", width=14, height=1, cursor="arrow")
 generate_btn.pack(pady=12)
+
 def on_btn_enter(event):
     generate_btn.config(cursor="hand2")
+
 def on_btn_leave(event):
     generate_btn.config(cursor="arrow")
 generate_btn.bind("<Enter>", on_btn_enter)

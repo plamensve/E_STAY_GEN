@@ -512,7 +512,7 @@ def on_btn_leave(event):
 generate_btn.bind("<Enter>", on_btn_enter)
 generate_btn.bind("<Leave>", on_btn_leave)
 
-# --- Footer ---
+# --- Footer -----
 footer = tk.Label(root, text="2025 Plamen Svetoslavov eStayGen v1.0", font=("Arial", 10), fg="#888888")
 footer.pack(side=tk.BOTTOM, pady=8)
 

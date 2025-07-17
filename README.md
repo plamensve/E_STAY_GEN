@@ -36,3 +36,20 @@
 ```bash
 git clone https://github.com/plamensve/E_STAY_GEN.git
 cd E_STAY_GEN
+pip install -r requirements.txt
+pip install tkcalendar openpyxl
+
+python eStayGen.py
+
+
+
+📁 Вход и изход
+Вход: XML файл тип ЕДП, предоставен от НАП (или генериран от друг модул)
+
+Изход: XML файл тип stayTransportDeclaration, запазен на избрано място
+
+📝 Автор
+Plamen Svetoslavov
+© 2025 - All rights reserved
+
+

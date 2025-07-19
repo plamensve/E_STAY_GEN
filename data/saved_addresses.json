@@ -1,0 +1,57 @@
+[
+  {
+    "region": "Пловдив",
+    "region_code": "PDV",
+    "municipality": "Пловдив",
+    "municipality_code": "PDV22",
+    "city": "гр.Пловдив",
+    "city_code": "56784",
+    "company": "Транс Ойл",
+    "address": "Васил Левски",
+    "number": "156"
+  },
+  {
+    "region": "",
+    "region_code": "",
+    "municipality": "",
+    "municipality_code": "",
+    "city": "",
+    "city_code": "",
+    "company": "",
+    "address": "",
+    "number": "№2"
+  },
+  {
+    "region": "",
+    "region_code": "",
+    "municipality": "",
+    "municipality_code": "",
+    "city": "",
+    "city_code": "",
+    "company": "",
+    "address": "Адрес 3",
+    "number": "№3"
+  },
+  {
+    "region": "",
+    "region_code": "",
+    "municipality": "",
+    "municipality_code": "",
+    "city": "",
+    "city_code": "",
+    "company": "",
+    "address": "Адрес 4",
+    "number": "№4"
+  },
+  {
+    "region": "",
+    "region_code": "",
+    "municipality": "",
+    "municipality_code": "",
+    "city": "",
+    "city_code": "",
+    "company": "",
+    "address": "Адрес 5",
+    "number": "№5"
+  }
+]

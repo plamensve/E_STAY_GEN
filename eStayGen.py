@@ -348,7 +348,7 @@ DATE_WIDTH = 26
 # --- Създаване на прозорец (ТРЯБВА ДА Е ПРЕДИ ВСЯКА УПОТРЕБА НА root) ---
 root = tk.Tk()
 root.title("Генератор на stayTransportDeclaration XML")
-root.geometry("1000x800")
+root.geometry("1150x750")
 
 # Глобални настройки за размери и шрифт
 ENTRY_WIDTH = 18
@@ -628,7 +628,7 @@ for i in range(5):
     row['region'] = AutocompleteEntry(DOMAIN_LIST, row_frame, font=("Arial", 12), width=FIELD_WIDTH_SMALL)
     row['region'].grid(row=0, column=1, padx=2)
     row['region_code_var'] = tk.StringVar()
-    row['region_code'] = tk.Entry(row_frame, font=("Arial", 12), width=CODE_WIDTH_SMALL, textvariable=row['region_code_var'], state='readonly', justify='center')
+    row['region_code'] = tk.Entry(row_frame, font=("Arial", 12), width=8, textvariable=row['region_code_var'], state='readonly', justify='center')
     row['region_code'].grid(row=0, column=2, padx=2)
     def on_region_select_local(value, var=row['region_code_var']):
         var.set(DOMAIN_DICT.get(value, ''))
@@ -643,7 +643,7 @@ for i in range(5):
     row['municipality'] = AutocompleteEntry(MUNICIPALITY_LIST, row_frame, font=("Arial", 12), width=FIELD_WIDTH_SMALL)
     row['municipality'].grid(row=0, column=3, padx=2)
     row['municipality_code_var'] = tk.StringVar()
-    row['municipality_code'] = tk.Entry(row_frame, font=("Arial", 12), width=CODE_WIDTH_SMALL, textvariable=row['municipality_code_var'], state='readonly', justify='center')
+    row['municipality_code'] = tk.Entry(row_frame, font=("Arial", 12), width=8, textvariable=row['municipality_code_var'], state='readonly', justify='center')
     row['municipality_code'].grid(row=0, column=4, padx=2)
     def on_municipality_select_local(value, var=row['municipality_code_var']):
         var.set(MUNICIPALITY_DICT.get(value, ''))
@@ -658,7 +658,7 @@ for i in range(5):
     row['city'] = AutocompleteEntry(CITY_LIST, row_frame, font=("Arial", 12), width=FIELD_WIDTH_SMALL)
     row['city'].grid(row=0, column=5, padx=2)
     row['city_code_var'] = tk.StringVar()
-    row['city_code'] = tk.Entry(row_frame, font=("Arial", 12), width=CODE_WIDTH_SMALL, textvariable=row['city_code_var'], state='readonly', justify='center')
+    row['city_code'] = tk.Entry(row_frame, font=("Arial", 12), width=8, textvariable=row['city_code_var'], state='readonly', justify='center')
     row['city_code'].grid(row=0, column=6, padx=2)
     def on_city_select_local(value, var=row['city_code_var']):
         var.set(CITY_DICT.get(value, ''))
@@ -731,8 +731,8 @@ for i in range(5):
     municipality_code_var_main = municipality_code_var
     city_entry_main = city_entry
     city_code_var_main = city_code_var
-    apply_btn = tk.Button(row_frame, text="Приложи адрес", font=("Arial", 10), command=apply_address, bg="#2196F3", fg="white")
-    apply_btn.grid(row=0, column=9, padx=2)
+    apply_btn = tk.Button(row_frame, text="Приложи адрес", font=("Arial", 9), width=13, command=apply_address, bg="#2196F3", fg="white")
+    apply_btn.grid(row=0, column=11, padx=8)
 
     def clear_row(idx=i):
         for key, entry in transport_entries[idx].items():
@@ -766,8 +766,8 @@ for i in range(5):
         # Изтриване от файла
         saved_addresses[idx] = {}
         save_addresses(saved_addresses)
-    del_btn = tk.Button(row_frame, text="Изтрий адрес", font=("Arial", 10), command=clear_row, bg="#F44336", fg="white")
-    del_btn.grid(row=0, column=10, padx=2)
+    del_btn = tk.Button(row_frame, text="Изтрий адрес", font=("Arial", 9), width=13, command=clear_row, bg="#F44336", fg="white")
+    del_btn.grid(row=0, column=12, padx=8)
 
     # --- Автоматично запазване при промяна ---
     def save_row(event=None, idx=i, row=row):

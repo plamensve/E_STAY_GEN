@@ -347,6 +347,7 @@ DATE_WIDTH = 26
 
 # --- Създаване на прозорец (ТРЯБВА ДА Е ПРЕДИ ВСЯКА УПОТРЕБА НА root) ---
 root = tk.Tk()
+root.iconbitmap(resource_path("data/eStayGen_ico.ico"))
 root.title("Генератор на stayTransportDeclaration XML")
 root.geometry("1150x750")
 
@@ -535,7 +536,7 @@ address_entry.config(fg="gray")
 # Номер
 number_entry = tk.Entry(row2_frame, font=FIELD_FONT, width=NUMBER_WIDTH)
 number_entry.grid(row=0, column=2, padx=(0, 8), pady=6, sticky="ew")
-number_entry.insert(0, "   №")
+number_entry.insert(0, "№")
 
 
 def clear_number_placeholder(event):
@@ -566,7 +567,8 @@ generate_btn.pack(pady=12)
 # footer = tk.Label(root, text="2025 Plamen Svetoslavov eStayGen v1.0", font=("Arial", 10), fg="#888888")
 # footer.pack(side=tk.BOTTOM, pady=8)
 
-SAVED_ADDRESSES_PATH = resource_path('data/saved_addresses.json')
+SAVED_ADDRESSES_PATH = os.path.join(os.getcwd(), 'saved_addresses.json')
+
 
 # --- Функции за зареждане и запис на адреси ---
 def load_saved_addresses():
@@ -576,9 +578,11 @@ def load_saved_addresses():
     except Exception:
         return [{} for _ in range(5)]
 
+
 def save_addresses(addresses):
     with open(SAVED_ADDRESSES_PATH, 'w', encoding='utf-8') as f:
         json.dump(addresses, f, ensure_ascii=False, indent=2)
+
 
 # --- Транспортни адреси ---
 # Нови по-малки размери за транспортните редове
@@ -599,16 +603,19 @@ for i in range(5):
     row_frame = tk.Frame(transport_frame)
     row_frame.pack(pady=2, fill='x')
 
+
     # --- Placeholder logic for all fields ---
     def make_placeholder(entry, placeholder):
         def clear_placeholder(event, entry=entry, placeholder=placeholder):
             if entry.get() == placeholder:
                 entry.delete(0, tk.END)
                 entry.config(fg="black")
+
         def restore_placeholder(event, entry=entry, placeholder=placeholder):
             if entry.get().strip() == "":
                 entry.insert(0, placeholder)
                 entry.config(fg="gray")
+
         entry.bind("<FocusIn>", clear_placeholder)
         entry.bind("<FocusOut>", restore_placeholder)
         # При първоначално създаване
@@ -616,22 +623,28 @@ for i in range(5):
             entry.insert(0, placeholder)
             entry.config(fg="gray")
 
+
     # Транспортна фирма (първа колона)
     row['company'] = tk.Entry(row_frame, font=("Arial", 12), width=COMPANY_WIDTH_SMALL)
     row['company'].delete(0, tk.END)
-    row['company'].insert(0, saved_addresses[i].get('company', f"Тр. Фирма {i+1}"))
+    row['company'].insert(0, saved_addresses[i].get('company', f"Тр. Фирма {i + 1}"))
     row['company'].config(fg="gray" if not saved_addresses[i].get('company') else "black")
     row['company'].grid(row=0, column=0, padx=2)
-    make_placeholder(row['company'], f"Тр. Фирма {i+1}")
+    make_placeholder(row['company'], f"Тр. Фирма {i + 1}")
 
     # Област
     row['region'] = AutocompleteEntry(DOMAIN_LIST, row_frame, font=("Arial", 12), width=FIELD_WIDTH_SMALL)
     row['region'].grid(row=0, column=1, padx=2)
     row['region_code_var'] = tk.StringVar()
-    row['region_code'] = tk.Entry(row_frame, font=("Arial", 12), width=8, textvariable=row['region_code_var'], state='readonly', justify='center')
+    row['region_code'] = tk.Entry(row_frame, font=("Arial", 12), width=8, textvariable=row['region_code_var'],
+                                  state='readonly', justify='center')
     row['region_code'].grid(row=0, column=2, padx=2)
+
+
     def on_region_select_local(value, var=row['region_code_var']):
         var.set(DOMAIN_DICT.get(value, ''))
+
+
     row['region'].set_on_select(on_region_select_local)
     row['region'].delete(0, tk.END)
     row['region'].insert(0, saved_addresses[i].get('region', 'Област'))
@@ -643,10 +656,15 @@ for i in range(5):
     row['municipality'] = AutocompleteEntry(MUNICIPALITY_LIST, row_frame, font=("Arial", 12), width=FIELD_WIDTH_SMALL)
     row['municipality'].grid(row=0, column=3, padx=2)
     row['municipality_code_var'] = tk.StringVar()
-    row['municipality_code'] = tk.Entry(row_frame, font=("Arial", 12), width=8, textvariable=row['municipality_code_var'], state='readonly', justify='center')
+    row['municipality_code'] = tk.Entry(row_frame, font=("Arial", 12), width=8,
+                                        textvariable=row['municipality_code_var'], state='readonly', justify='center')
     row['municipality_code'].grid(row=0, column=4, padx=2)
+
+
     def on_municipality_select_local(value, var=row['municipality_code_var']):
         var.set(MUNICIPALITY_DICT.get(value, ''))
+
+
     row['municipality'].set_on_select(on_municipality_select_local)
     row['municipality'].delete(0, tk.END)
     row['municipality'].insert(0, saved_addresses[i].get('municipality', 'Община'))
@@ -658,10 +676,15 @@ for i in range(5):
     row['city'] = AutocompleteEntry(CITY_LIST, row_frame, font=("Arial", 12), width=FIELD_WIDTH_SMALL)
     row['city'].grid(row=0, column=5, padx=2)
     row['city_code_var'] = tk.StringVar()
-    row['city_code'] = tk.Entry(row_frame, font=("Arial", 12), width=8, textvariable=row['city_code_var'], state='readonly', justify='center')
+    row['city_code'] = tk.Entry(row_frame, font=("Arial", 12), width=8, textvariable=row['city_code_var'],
+                                state='readonly', justify='center')
     row['city_code'].grid(row=0, column=6, padx=2)
+
+
     def on_city_select_local(value, var=row['city_code_var']):
         var.set(CITY_DICT.get(value, ''))
+
+
     row['city'].set_on_select(on_city_select_local)
     row['city'].delete(0, tk.END)
     row['city'].insert(0, saved_addresses[i].get('city', 'Населено място'))
@@ -672,30 +695,33 @@ for i in range(5):
     # Адрес
     row['address'] = tk.Entry(row_frame, font=("Arial", 12), width=ADDRESS_WIDTH_SMALL)
     row['address'].delete(0, tk.END)
-    row['address'].insert(0, saved_addresses[i].get('address', f"Адрес {i+1}"))
+    row['address'].insert(0, saved_addresses[i].get('address', f"Адрес {i + 1}"))
     row['address'].config(fg="gray" if not saved_addresses[i].get('address') else "black")
     row['address'].grid(row=0, column=7, padx=2)
-    make_placeholder(row['address'], f"Адрес {i+1}")
+    make_placeholder(row['address'], f"Адрес {i + 1}")
 
     # Номер
     row['number'] = tk.Entry(row_frame, font=("Arial", 12), width=NUMBER_WIDTH_SMALL)
     row['number'].delete(0, tk.END)
-    row['number'].insert(0, saved_addresses[i].get('number', f"№{i+1}"))
+    row['number'].insert(0, saved_addresses[i].get('number', f"№{i + 1}"))
     row['number'].config(fg="gray" if not saved_addresses[i].get('number') else "black")
     row['number'].grid(row=0, column=8, padx=2)
-    make_placeholder(row['number'], f"№{i+1}")
+    make_placeholder(row['number'], f"№{i + 1}")
+
 
     def apply_address(
-        region_entry=row['region'], region_code_var=row['region_code_var'],
-        municipality_entry=row['municipality'], municipality_code_var=row['municipality_code_var'],
-        city_entry=row['city'], city_code_var=row['city_code_var'],
-        addr_entry=row['address'], num_entry=row['number']):
+            region_entry=row['region'], region_code_var=row['region_code_var'],
+            municipality_entry=row['municipality'], municipality_code_var=row['municipality_code_var'],
+            city_entry=row['city'], city_code_var=row['city_code_var'],
+            addr_entry=row['address'], num_entry=row['number']):
+
         # Apply to main fields for XML
         region_entry_val = region_entry.get()
         municipality_entry_val = municipality_entry.get()
         city_entry_val = city_entry.get()
         address_val = addr_entry.get()
         number_val = num_entry.get()
+
         # Main region
         region_entry_main.delete(0, tk.END)
         region_entry_main.insert(0, region_entry_val)
@@ -703,6 +729,7 @@ for i in range(5):
         region_code_var_main.set(region_code_var.get())
         if hasattr(region_entry_main, 'on_select_callback') and region_entry_main.on_select_callback:
             region_entry_main.on_select_callback(region_entry_val)
+
         # Main municipality
         municipality_entry_main.delete(0, tk.END)
         municipality_entry_main.insert(0, municipality_entry_val)
@@ -710,6 +737,7 @@ for i in range(5):
         municipality_code_var_main.set(municipality_code_var.get())
         if hasattr(municipality_entry_main, 'on_select_callback') and municipality_entry_main.on_select_callback:
             municipality_entry_main.on_select_callback(municipality_entry_val)
+
         # Main city
         city_entry_main.delete(0, tk.END)
         city_entry_main.insert(0, city_entry_val)
@@ -717,37 +745,44 @@ for i in range(5):
         city_code_var_main.set(city_code_var.get())
         if hasattr(city_entry_main, 'on_select_callback') and city_entry_main.on_select_callback:
             city_entry_main.on_select_callback(city_entry_val)
+
         # Main address
         address_entry.delete(0, tk.END)
         address_entry.insert(0, address_val)
         address_entry.config(fg="black")
+
         # Main number
         number_entry.delete(0, tk.END)
         number_entry.insert(0, number_val)
         number_entry.config(fg="black")
+
+
     region_entry_main = region_entry
     region_code_var_main = region_code_var
     municipality_entry_main = municipality_entry
     municipality_code_var_main = municipality_code_var
     city_entry_main = city_entry
     city_code_var_main = city_code_var
-    apply_btn = tk.Button(row_frame, text="Приложи адрес", font=("Arial", 9), width=13, command=apply_address, bg="#2196F3", fg="white")
+
+    apply_btn = tk.Button(row_frame, text="Приложи адрес", font=("Arial", 9), width=13, command=apply_address,
+                          bg="#2196F3", fg="white")
     apply_btn.grid(row=0, column=11, padx=8)
+
 
     def clear_row(idx=i):
         for key, entry in transport_entries[idx].items():
             if isinstance(entry, tk.Entry):
                 if key == 'company':
                     entry.delete(0, tk.END)
-                    entry.insert(0, f"Транспортна фирма {idx+1}")
+                    entry.insert(0, f"Тр. Фирма {idx + 1}")
                     entry.config(fg="gray")
                 elif key == 'address':
                     entry.delete(0, tk.END)
-                    entry.insert(0, f"Адрес {idx+1}")
+                    entry.insert(0, f"Адрес {idx + 1}")
                     entry.config(fg="gray")
                 elif key == 'number':
                     entry.delete(0, tk.END)
-                    entry.insert(0, f"№{idx+1}")
+                    entry.insert(0, f"№{idx + 1}")
                     entry.config(fg="gray")
                 elif key == 'region':
                     entry.delete(0, tk.END)
@@ -766,11 +801,17 @@ for i in range(5):
         # Изтриване от файла
         saved_addresses[idx] = {}
         save_addresses(saved_addresses)
-    del_btn = tk.Button(row_frame, text="Изтрий адрес", font=("Arial", 9), width=13, command=clear_row, bg="#F44336", fg="white")
+
+
+    del_btn = tk.Button(row_frame, text="Изтрий адрес", font=("Arial", 9), width=13, command=clear_row, bg="#F44336",
+                        fg="white")
     del_btn.grid(row=0, column=12, padx=8)
+
 
     # --- Автоматично запазване при промяна ---
     def save_row(event=None, idx=i, row=row):
+        if row is None:
+            row = row
         saved_addresses[idx] = {
             'region': row['region'].get(),
             'region_code': row['region_code_var'].get(),
@@ -780,9 +821,11 @@ for i in range(5):
             'city_code': row['city_code_var'].get(),
             'company': row['company'].get(),
             'address': row['address'].get(),
-            'number': row['number'].get(),
+            'number': row['number'].get().strip(),
         }
         save_addresses(saved_addresses)
+
+
     for key in ['region', 'municipality', 'city', 'company', 'address', 'number']:
         row[key].bind('<FocusOut>', save_row)
 
@@ -797,6 +840,25 @@ def on_btn_leave(event):
     generate_btn.config(cursor="arrow")
 
 
+def on_close():
+    for idx, row in enumerate(transport_entries):
+        saved_addresses[idx] = {
+            'region': row['region'].get(),
+            'region_code': row['region_code_var'].get(),
+            'municipality': row['municipality'].get(),
+            'municipality_code': row['municipality_code_var'].get(),
+            'city': row['city'].get(),
+            'city_code': row['city_code_var'].get(),
+            'company': row['company'].get(),
+            'address': row['address'].get(),
+            'number': row['number'].get().strip(),
+        }
+    save_addresses(saved_addresses)
+    root.destroy()
+
+
+
+
 generate_btn.bind("<Enter>", on_btn_enter)
 generate_btn.bind("<Leave>", on_btn_leave)
 
@@ -805,4 +867,7 @@ generate_btn.bind("<Leave>", on_btn_leave)
 footer = tk.Label(root, text="2025 Plamen Svetoslavov eStayGen v1.1", font=("Arial", 10), fg="#888888")
 footer.pack(side=tk.BOTTOM, pady=8)
 
+root.iconbitmap(resource_path("data/eStayGen_ico.ico"))
+
+root.protocol("WM_DELETE_WINDOW", on_close)
 root.mainloop()
